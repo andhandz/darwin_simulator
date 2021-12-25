@@ -18,10 +18,44 @@ public class SimulationEngine implements Runnable  {
         stats.setAnimalCounter(params.animalAmount);
         stats.setAvgEnergy(params.startEnergy);
         stats.setPlantCounter(params.plantsAmount);
-        if(params.minimalEnergyForChild<2){
+        exceptions();
+        this.map= new Map(params.mapSize, params.jungleSize, params.animalAmount, params.startEnergy, params.plantsAmount, params.plantEnergy);
+    }
+
+    public void exceptions(){
+        if(params.minimalEnergyForChild<5){
             throw  new IllegalArgumentException("Set higher value of energy for copulate!");
         }
-        this.map= new Map(params.mapSize, params.jungleSize, params.animalAmount, params.startEnergy, params.plantsAmount, params.plantEnergy);
+        if(params.minimalEnergyForChild>50){
+            throw  new IllegalArgumentException("Set lower value of energy for copulate!");
+        }
+        if(params.mapSize<10){
+            throw  new IllegalArgumentException("Map is too small!");
+        }
+        if(params.mapSize>100){
+            throw new IllegalArgumentException("Map is too big!");
+        }
+        if(params.animalAmount>100){
+            throw new IllegalArgumentException("Too many animals!");
+        }
+        if(params.plantsAmount<10){
+            throw new IllegalArgumentException("Not enough plants!");
+        }
+        if(params.plantsAmount>100){
+            throw new IllegalArgumentException("Too many plants!");
+        }
+        if(params.startEnergy<10){
+            throw new IllegalArgumentException("Set higher value of start energy!");
+        }
+        if(params.startEnergy>100){
+            throw new IllegalArgumentException("Set lower value of start energy!");
+        }
+        if(params.plantEnergy<10){
+            throw new IllegalArgumentException("Set higher value of plant energy!");
+        }
+        if(params.plantEnergy>100){
+            throw new IllegalArgumentException("Set lower value of plant energy!");
+        }
     }
 
     public void dailyPlants(){
